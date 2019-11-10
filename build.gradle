@@ -18,13 +18,28 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "Greenwich.SR3")
+}
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation('io.springfox:springfox-swagger2:2.9.2') {
+		exclude group: 'io.swagger', module: 'swagger-models'
+	}
+	implementation "io.springfox:springfox-swagger-ui:2.9.2"
+	implementation "io.swagger:swagger-models:1.5.21"
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
 
