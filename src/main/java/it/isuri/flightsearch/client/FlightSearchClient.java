@@ -1,5 +1,7 @@
 package it.isuri.flightsearch.client;
 
+import it.isuri.flightsearch.model.BusinessFlight;
+import it.isuri.flightsearch.model.CheapFlight;
 import it.isuri.flightsearch.model.ExtSearchResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,11 @@ public interface FlightSearchClient {
             value = {"${flight.search.cheap}"},
             produces = {"application/json"}
     )
-    ResponseEntity<ExtSearchResult> getCheapFlights();
+    ResponseEntity<ExtSearchResult<CheapFlight>> getCheapFlights();
 
     @GetMapping(
             value = {"${flight.search.business}"},
             produces = {"application/json"}
     )
-    ResponseEntity<ExtSearchResult> getBusinessFlights();
+    ResponseEntity<ExtSearchResult<BusinessFlight>> getBusinessFlights();
 }

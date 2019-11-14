@@ -1,36 +1,35 @@
 package it.isuri.flightsearch.service;
 
-import it.isuri.flightsearch.client.FlightSearchClient;
-import it.isuri.flightsearch.model.ExtSearchResult;
-import it.isuri.flightsearch.model.Flight;
-import it.isuri.flightsearch.model.SearchResult;
+import it.isuri.flightsearch.model.FlightEntity;
+import it.isuri.flightsearch.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
 public class FlightSearchServiceImpl implements FlightSearchService {
 
-    private final FlightSearchClient flightSearchClient;
+    private final FlightRepository flightRepository;
 
     @Override
-    public SearchResult searchFlights(String departure, String arrival, LocalDate date) {
+    public Page<FlightEntity> searchFlights(String orderBy, String direction, int page, int size, String departure, String arrival, LocalDate date) {
 
-        ResponseEntity<ExtSearchResult> cheapFlights = flightSearchClient.getCheapFlights();
-        System.out.println("***** Flights :  " + cheapFlights.getBody().getData());
+        Sort sort;
+        if (direction.equals("ASC")) {
+            sort = Sort.by(new Sort.Order(Direction.ASC, orderBy));
+        } else {
+            sort = Sort.by(new Sort.Order(Direction.DESC, orderBy));
+        }
 
-        Flight flight = new Flight();
-        flight.setDeparture("Cruz del Eje");
-        flight.setArrival("Antalya");
-        flight.setFrom(LocalDateTime.now());
-        flight.setTo(LocalDateTime.now());
-        SearchResult searchResult = new SearchResult();
-        searchResult.setFlightList(Collections.singletonList(flight));
-        return searchResult;
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return flightRepository.findAllByDepartureAndArrivalAndDepartureDate(departure, arrival, date, date != null ? date.plusDays(1) : null, pageable);
     }
 }

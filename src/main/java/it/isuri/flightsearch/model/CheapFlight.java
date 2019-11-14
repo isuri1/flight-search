@@ -3,12 +3,12 @@ package it.isuri.flightsearch.model;
 import lombok.Data;
 
 @Data
-public class ExtFlight {
+public class CheapFlight {
 
     private String route;
 
-    private double departure;
+    private String departure;
 
-    private double arrival;
+    private String arrival;
 
 }

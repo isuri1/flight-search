@@ -7,12 +7,14 @@ import java.time.LocalDateTime;
 @Data
 public class Flight {
 
+    private FlightType flightType;
+
     private String departure;
 
     private String arrival;
 
-    private LocalDateTime from;
+    private LocalDateTime departureDate;
 
-    private LocalDateTime to;
+    private LocalDateTime arrivalDate;
 
 }

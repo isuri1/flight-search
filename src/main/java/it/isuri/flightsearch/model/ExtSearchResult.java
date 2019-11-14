@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ExtSearchResult {
+public class ExtSearchResult<T> {
 
-    private List<ExtFlight> data;
+    private List<T> data;
 }

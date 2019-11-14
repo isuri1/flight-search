@@ -1,10 +1,11 @@
 package it.isuri.flightsearch.service;
 
-import it.isuri.flightsearch.model.SearchResult;
+import it.isuri.flightsearch.model.FlightEntity;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 
 public interface FlightSearchService {
 
-    SearchResult searchFlights(String departure, String arrival, LocalDate date);
+    Page<FlightEntity> searchFlights(String orderBy, String direction, int page, int size, String departure, String arrival, LocalDate date);
 }
