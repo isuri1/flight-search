@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+//test
 @FeignClient(name = "flightSearchClient", url = "${flight.search.url}")
 public interface FlightSearchClient {
 
